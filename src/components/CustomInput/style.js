@@ -2,11 +2,13 @@ import colors from "../../utils/colors";
 
 export default ({
     holder: {
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        marginTop: 20
     },
     label: {
         color: colors.white,
-        fontSize: 18
+        fontSize: 18,
+        fontFamily: 'Overpass-Regular'
     },
     inputHolder: {
         flexDirection: 'row',
@@ -23,9 +25,26 @@ export default ({
     icon: {
         marginLeft: 10
     },
+    rightIcon: {
+        marginRight: 10
+    },
     input: {
         flex: 1,
         paddingLeft: 10,
-        height: '100%'
+        paddingRight: 10,
+        height: '100%',
+        justifyContent: 'center'
+    },
+    dateInput: {
+        flex: 1,
+        height: '100%',
+        borderWidth: 0,
+        padding: 0
+    },
+    error: {
+        color: colors.red,
+        fontSize: 18,
+        fontFamily: 'Overpass-Regular',
+        textDecorationLine: 'underline'
     }
 })
