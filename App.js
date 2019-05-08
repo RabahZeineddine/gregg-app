@@ -2,12 +2,14 @@ import React from 'react';
 import CPF from './src/pages/CPF'
 import Home from './src/pages/Home'
 import Login from './src/pages/Login'
+import SignupIntroduction from './src/pages/Signup/Introduction'
 import Signup from './src/pages/Signup'
 import AuthLoadingScreen from './src/pages/AuthLoadingScreen'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './src/reducers'
 import thunk from 'redux-thunk'
+import { Font } from 'expo';
 
 import {
   createStackNavigator,
@@ -29,9 +31,12 @@ const AuthStack = createStackNavigator(
     Login: {
       screen: Login
     },
+    SignupIntroduction: {
+      screen: SignupIntroduction
+    },
     Signup: {
       screen: Signup
-    }
+    },
   },
   {
     initialRouteName: 'CPF'
@@ -59,10 +64,32 @@ const store = createStore(
 )
 
 export default class App extends React.Component {
+
+  state = {
+    fontLoaded: false
+  }
+
+  async componentDidMount() {
+
+    await Font.loadAsync({
+      'Overpass-SemiBold': require('./src/assets/fonts/Overpass-SemiBold.ttf'),
+      'Overpass-Light': require('./src/assets/fonts/Overpass-Light.ttf'),
+      'Overpass-Regular': require('./src/assets/fonts/Overpass-Regular.ttf'),
+      'Overpass-Bold': require('./src/assets/fonts/Overpass-Bold.ttf'),
+      'Overpass-ExtraBold': require('./src/assets/fonts/Overpass-ExtraBold.ttf')
+    })
+
+    this.setState({ fontLoaded: true });
+  }
+
+
   render() {
     return (
       <Provider store={store}>
-        <AppContainer />
+        {this.state.fontLoaded ?
+          <AppContainer />
+          : null
+        }
       </Provider>
     );
   }
