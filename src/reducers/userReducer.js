@@ -7,18 +7,19 @@ import {
     LOGOUT_USER,
     VERIFY_REGISTERED_USER_FAILURE,
     VERIFY_REGISTERED_USER_REQUEST,
-    VERIFY_REGISTERED_USER_SUCCESS
+    VERIFY_REGISTERED_USER_SUCCESS,
+    SIGNUP_USER_FAILURE,
+    SIGNUP_USER_REQUEST,
+    SIGNUP_USER_SUCCESS
 } from '../actions/usersActions'
 
 
 const initialUserState = {
-    // isLogged: LocalSession.sessionCheck('user'),
     isRegistered: false,
     isLogged: false,
     isFetching: false,
     fetchingError: false,
     lastUpdated: 0,
-    // profile: LocalSession.getSession('user') || {}
     profile: {}
 }
 
@@ -78,7 +79,37 @@ function user(state = initialUserState, action) {
                 fetchingError: false,
                 lastUpdated: new Date(),
                 isRegistered: action.users.length > 0,
-                profile: action.users.length > 0 ? action.users[0] : {}
+                profile: action.users.length > 0 ?
+                    action.users[0] :
+                    { cpf: action.cpf }
+            }
+        case SIGNUP_USER_REQUEST:
+            return {
+                ...state,
+                isFetching: true,
+                fetchingError: false,
+                error: null,
+                isRegistered: false
+            }
+
+        case SIGNUP_USER_FAILURE:
+            return {
+                ...state,
+                isFetching: false,
+                fetchingError: true,
+                error: action.error,
+                lastUpdated: new Date()
+            }
+        case SIGNUP_USER_SUCCESS:
+            return {
+                ...state,
+                isRegistered: true,
+                isFetching: false,
+                fetchingError: false,
+                lastUpdated: new Date(),
+                isRegistered: action.users.length > 0,
+                profile: action.users.length > 0 ?
+                    action.users[0] : {}
             }
         default:
             return state

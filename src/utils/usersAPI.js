@@ -24,8 +24,19 @@ export const login = async (user) => {
 export const verifyRegisteredUser = async (user) => {
     return fetch(`${env.API}/users?cpf=${user.cpf}`, {
         headers,
-        method: 'GET',
-        timeout: 5000
+        method: 'GET'
+    }).then(helper.checkFetchResponse)
+        .catch(err => {
+            return Promise.reject(new ErrorHandler(err.status || 500).format())
+        })
+}
+
+export const signup = async (user) => {
+    return fetch(`${env.API}/users/`, {
+        headers,
+        method: 'POST',
+        timeout: 5000,
+        body: JSON.stringify(user)
     }).then(helper.checkFetchResponse)
         .catch(err => {
             return Promise.reject(new ErrorHandler(err.status || 500).format())

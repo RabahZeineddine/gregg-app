@@ -9,6 +9,10 @@ export const VERIFY_REGISTERED_USER_REQUEST = 'VERIFY_REGISTERED_USER_REQUEST'
 export const VERIFY_REGISTERED_USER_FAILURE = 'VERIFY_REGISTERED_USER_FAILURE'
 export const VERIFY_REGISTERED_USER_SUCCESS = 'VERIFY_REGISTERED_USER_SUCCESS'
 
+export const SIGNUP_USER_REQUEST = 'SIGNUP_USER_REQUEST'
+export const SIGNUP_USER_FAILURE = 'SIGNUP_USER_FAILURE'
+export const SIGNUP_USER_SUCCESS = 'SIGNUP_USER_SUCCESS'
+
 
 const loginUserRequest = () => {
     return {
@@ -59,10 +63,11 @@ const verifyRegisteredUserFailure = (error) => {
     }
 }
 
-const verifyRegisteredUserSuccess = (users) => {
+const verifyRegisteredUserSuccess = (users, cpf) => {
     return {
         type: VERIFY_REGISTERED_USER_SUCCESS,
-        users
+        users,
+        cpf
     }
 }
 
@@ -71,7 +76,38 @@ export const verifyRegisteredUser = (user) => dispatch => {
     return UserAPI
         .verifyRegisteredUser(user)
         .then(users => {
-            return dispatch(verifyRegisteredUserSuccess(users))
+            return dispatch(verifyRegisteredUserSuccess(users, user.cpf))
         })
         .catch(err => dispatch(verifyRegisteredUserFailure(err)))
+}
+
+
+const signupUserRequest = () => {
+    return {
+        type: SIGNUP_USER_REQUEST
+    }
+}
+
+const signupUserSuccess = (user) => {
+    return {
+        type: SIGNUP_USER_SUCCESS,
+        user
+    }
+}
+
+const signupUserFailure = (error) => {
+    return {
+        type: SIGNUP_USER_FAILURE,
+        error
+    }
+}
+
+export const signup = (user) => dispatch => {
+    dispatch(signupUserRequest())
+    return UserAPI
+        .signup(user)
+        .then(newUser => {
+            return dispatch(signupUserSuccess(newUser))
+        })
+        .catch(err => dispatch(signupUserFailure(err)))
 }

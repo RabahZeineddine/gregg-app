@@ -3,7 +3,8 @@ import {
     View,
     StyleSheet,
     Vibration,
-    Text
+    Text,
+    Platform
 } from 'react-native'
 import style from './style'
 import { LinearGradient } from 'expo'
@@ -17,6 +18,8 @@ import Signup_3rd from './Signup_3rd';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CustomActivityIndicator from '../../components/CustomActivityIndicator';
 import CustomModal from '../../components/CustomModal';
+import { connect } from 'react-redux'
+import { signup } from '../../actions/usersActions'
 
 
 const customStyles = {
@@ -48,7 +51,6 @@ class Signup extends React.Component {
     }
 
     state = {
-        loading: false,
         showModal: false,
         currentPage: 0,
         email: {
@@ -98,26 +100,31 @@ class Signup extends React.Component {
 
     render() {
 
+        const { user } = this.props
         return (
             <LinearGradient
                 colors={[colors.orange, colors.orange, colors.light_orange]}
                 style={styles.container}
             >
                 <View style={styles.container}>
-                    {(this.state.loading && (
+                    {(user.isFetching && (
                         <CustomActivityIndicator />
                     ))}
 
-                    {(this.state.showModal && (
+                    {(user.isRegistered && (
 
                         <CustomModal
                             title="Tudo certo!"
                             description="Eba! Seu cadastro foi efetuado com sucesso, agora vamos para a parte que importa!"
                             buttons={[
-                                { text: 'Vamos nessa!', backgroundColor: colors.green, onPress: () => this.setState({ showModal: false }) }
+                                { text: 'Vamos nessa!', onPress: () => this.setState({ showModal: false }) }
                             ]}
                             success={true} withImage={true} />
                     ))}
+
+                    {user.error && (
+                        <CustomModal title="Erro!" description={user.error.detail} />
+                    )}
 
                     <StatusBar />
                     <KeyboardAwareScrollView
@@ -126,8 +133,7 @@ class Signup extends React.Component {
                         contentContainerStyle={{ flexGrow: 1 }}
                         scrollEnabled={false}
                         enableOnAndroid
-                        keyboardShouldPersistTaps="handled"
-                    >
+                        keyboardShouldPersistTaps="handled">
                         <View style={styles.titleHolder}>
                             <Text style={styles.title}>gregg</Text>
                         </View>
@@ -136,17 +142,18 @@ class Signup extends React.Component {
                             currentPosition={this.state.currentPage}
                             stepCount={3}
                             onPress={this.onStepPress}
+                            scrollEnabled={false}
                         />
 
                         <ViewPager
                             style={styles.viewPager}
-                            ref={viewPager => {
-                                this.viewPager = viewPager
-                            }}
-                            initialPage={this.state.currentPage}
-                            onPageSelected={({ position }) => this.onStepPress(position)}
-                        >
+                            // For android
+                            horizontalScroll={false}
+                            //For IOS
+                            scrollEnabled={false}
 
+                            ref={viewPager => { this.viewPager = viewPager }}
+                        >
                             <View style={styles.pageContainer}>
                                 <Signup_1st
                                     nextStep={this.nextStep}
@@ -183,11 +190,10 @@ class Signup extends React.Component {
                                     finalStep={this.finalStep}
                                 />
                             </View>
-
                         </ViewPager>
                     </KeyboardAwareScrollView>
                 </View>
-            </LinearGradient>
+            </LinearGradient >
         )
     }
 
@@ -207,14 +213,11 @@ class Signup extends React.Component {
     }
 
     onStepPress = position => {
-
         const { currentPage } = this.state
         if (position > currentPage) {
-            if (this.validateInputsOnPage()) {
+            if (position - 1 == currentPage && this.validateInputsOnPage()) {
                 this.setState({ currentPage: position })
                 this.viewPager.setPage(position)
-            } else {
-                this.viewPager.setPage(currentPage)
             }
         } else {
             this.setState({ currentPage: position })
@@ -375,7 +378,7 @@ class Signup extends React.Component {
                 valid = false
             } else if (!this.validateSecondScreen(false)) {
                 this.onStepPress(1)
-                this.validateFirstScreen()
+                this.validateSecondScreen()
                 valid = false
             }
         }
@@ -386,16 +389,39 @@ class Signup extends React.Component {
     }
 
     registerUser = () => {
-        this.setState({ loading: true })
-        setTimeout(() => {
-            this.setState({
-                loading: false,
-                showModal: true
+        const user = {
+            name: this.state.firstname.value + ' ' + this.state.lastname.value,
+            email: this.state.email.value,
+            password: this.state.password.value,
+            gender: this.state.sex.value,
+            birthday: this.state.birthday.value,
+            cpf: this.props.user.profile.cpf
+        }
+
+        this.props.signup(user)
+            .then(() => {
+                const { user } = this.props
+                console.log(user)
             })
-        }, 1000)
     }
 }
 
 const styles = StyleSheet.create(style)
 
-export default Signup
+
+const mapStateToProps = ({ user }) => {
+    return {
+        user
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        signup: (user) => dispatch(signup(user))
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Signup)
