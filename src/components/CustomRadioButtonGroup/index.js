@@ -59,9 +59,9 @@ class CustomRadioButtonGroup extends React.Component {
     }
 
     handleInputChange = (value) => {
-        const { onChangeText, radio_buttons } = this.props
+        const { onChangeText } = this.props
         this.setState({ error: false })
-        if (onChangeText) onChangeText(radio_buttons.filter(btn => btn.value == value)[0].label)
+        if (onChangeText) onChangeText(value)
     }
 
     handleAnimation = () => {
