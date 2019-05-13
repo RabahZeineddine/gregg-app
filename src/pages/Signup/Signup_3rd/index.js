@@ -17,8 +17,8 @@ class Signup_3rd extends React.Component {
     state = {
         date: new Date(),
         radio_buttons: [
-            { label: 'Masculino', value: 0 },
-            { label: 'Feminino', value: 1 }
+            { label: 'Masculino', value: "Male" },
+            { label: 'Feminino', value: "Female" }
         ]
     }
 

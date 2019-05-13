@@ -38,7 +38,7 @@ class Introduction extends React.Component {
                     <Text style={styles.subtitle}>Para ter acesso as funcionalidades do nosso aplicativo, complete os espaços com seus dados:</Text>
                 </View>
                 <View style={styles.btnHolder}>
-                    <CustomButton text="Começar!" backgroundColor={colors.green} onPress={this.nextScreen} />
+                    <CustomButton text="Começar!" onPress={this.nextScreen} />
                 </View>
                 <View style={styles.imagesHolder}>
                     <View style={styles.colorView} />

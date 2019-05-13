@@ -1,6 +1,6 @@
 
 const config = {
-    API: 'https://gregg.localtunnel.me'
+    API: 'https://80344ab5.ngrok.io'
 }
 
 

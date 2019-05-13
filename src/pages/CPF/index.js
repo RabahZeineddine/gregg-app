@@ -4,10 +4,9 @@ import {
     Text,
     StyleSheet,
     Image,
-    TouchableOpacity,
     Keyboard,
     Alert,
-    ActivityIndicator
+    Vibration
 } from 'react-native'
 import style from './style'
 
@@ -20,6 +19,9 @@ import colors from '../../utils/colors';
 import StatusBar from '../../components/StatusBar'
 import { connect } from 'react-redux'
 import { verifyRegisteredUser } from '../../actions/usersActions';
+import CustomButton from '../../components/CustomButton';
+import CustomActivityIndicator from '../../components/CustomActivityIndicator';
+import CustomModal from '../../components/CustomModal';
 
 class CPF extends React.Component {
 
@@ -33,43 +35,56 @@ class CPF extends React.Component {
     }
 
     state = {
-        cpf: ''
+        cpf: {
+            value: '',
+            valid: true,
+            error: ''
+        }
     }
 
     handleSubmit = () => {
 
         Keyboard.dismiss()
 
-        if (this.state.cpf.trim() != '')
-            if (this.cpfField.isValid()) {
-                const user = {
-                    cpf: this.cpfField.getRawValue()
-                }
-                this.props.verifyRegisteredUser(user)
-                    .then(() => {
-                        const { user } = this.props
-                        if (user.isRegistered) {
-                            Alert.alert('Aviso', 'Usuario cadastrado')
-                        } else if (!user.error) {
-                            this.props.navigation.navigate('Signup')
-                        }
-                    })
-
-            } else {
-                Alert.alert('CPF inválido', 'Favor verifique o CPF informado.')
+        if (this.cpfField.isValid()) {
+            const user = {
+                cpf: this.cpfField.getRawValue()
             }
+            // this.props.verifyRegisteredUser(user)
+                // .then(() => {
+                    // const { user } = this.props
+                    // if (user.isRegistered) {
+                        // Alert.alert('Aviso', 'Usuario cadastrado')
+                    // } else if (!user.error) {
+                        this.props.navigation.navigate('SignupIntroduction')
+                    // }
+                // })
+
+        } else {
+            this.setState((previousState) => ({
+                cpf: {
+                    ...previousState['cpf'],
+                    error: 'CPF inválido',
+                    valid: false
+                }
+            }))
+
+            setTimeout(() => {
+                Vibration.vibrate(200)
+            })
+        }
     }
 
     handleInputChange = key => (value) => {
 
-        this.setState({ [key]: value })
+        this.setState((previousState) => ({
+            [key]: { ...previousState[key], value }
+        }))
     }
 
     render() {
 
         const { user } = this.props
-
-        if (user.error) Alert.alert('Erro', user.error.detail)
 
         return (
             <LinearGradient
@@ -78,9 +93,10 @@ class CPF extends React.Component {
             >
                 <View style={styles.container}>
                     {user.isFetching && (
-                        <View style={style.loader}>
-                            <ActivityIndicator size="large" color={colors.white} />
-                        </View>
+                        <CustomActivityIndicator size="large" />
+                    )}
+                    {user.error && (
+                        <CustomModal title="Erro!" description={user.error.detail} />
                     )}
                     <StatusBar />
                     <KeyboardAwareScrollView
@@ -104,18 +120,17 @@ class CPF extends React.Component {
                                 label="CPF"
                                 onChangeText={this.handleInputChange('cpf')}
                                 onSubmitEditing={this.handleSubmit}
-                                value={this.state.cpf}
-                                type={"cpf"}
-                                withMask={true}
+                                validationValue={this.state.cpf}
+                                type={"text"}
+                                mask={"cpf"}
                                 setRef={(ref) => this.cpfField = ref}
                                 returnKeyType="done"
-                                icon="user"
-                                iconSource="FontAwesome"
+                                icon="md-person"
+                                iconSource="Ionicons"
+                                resetValidation={this.resetInputValidation('cpf')}
                             />
                             <View style={styles.btnHolder}>
-                                <TouchableOpacity style={styles.btn} onPress={this.handleSubmit} >
-                                    <Text style={styles.btnText}>Entrar</Text>
-                                </TouchableOpacity>
+                                <CustomButton text="Entrar" onPress={this.handleSubmit} />
                             </View>
                         </View>
 
@@ -123,6 +138,10 @@ class CPF extends React.Component {
                 </View>
             </LinearGradient>
         )
+    }
+
+    resetInputValidation = (key) => () => {
+        this.setState((previousState) => ({ [key]: { ...previousState[key], valid: true } }))
     }
 }
 

@@ -68,7 +68,7 @@ class CustomTextInput extends React.Component {
     }
 
     getInput = () => {
-        const { mask, setRef, returnKeyType, validationValue } = this.props
+        const { mask, setRef, returnKeyType, validationValue, onSubmitEditing } = this.props
         return mask ?
             <TextInputMask
                 type={mask}
@@ -80,6 +80,7 @@ class CustomTextInput extends React.Component {
                 placeholder={this.state.error ? this.props.validationValue.error : ''}
                 placeholderTextColor={this.state.error ? colors.red : null}
                 onFocus={this.resetError}
+                onSubmitEditing={onSubmitEditing || null}
             />
             : <TextInput
                 style={this.state.error ? [styles.input, styles.error] : styles.input}
@@ -90,6 +91,7 @@ class CustomTextInput extends React.Component {
                 placeholder={this.state.error ? this.props.validationValue.error : ''}
                 placeholderTextColor={this.state.error ? colors.red : null}
                 onFocus={this.resetError}
+                onSubmitEditing={onSubmitEditing || null}
             />
     }
     resetError = () => {

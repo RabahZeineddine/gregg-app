@@ -4,9 +4,7 @@ export default ({
     btn: {
         paddingTop: 10,
         paddingBottom: 10,
-        // paddingLeft: 64,
-        // paddingRight: 64,
-        backgroundColor: colors.dark_gray,
+        backgroundColor: colors.green,
         borderRadius: 18,
         minWidth: 170
     },

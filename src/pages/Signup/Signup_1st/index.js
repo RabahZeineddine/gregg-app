@@ -7,6 +7,7 @@ import style from './style'
 import CustomInput from '../../../components/CustomInput';
 import CustomButton from '../../../components/CustomButton';
 import AuthButton from '../../../components/AuthButton';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 class Signup_1st extends React.Component {
 
@@ -18,7 +19,14 @@ class Signup_1st extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <KeyboardAwareScrollView
+                style={styles.container}
+                resetScrollToCoords={{ x: 0, y: 0 }}
+                contentContainerStyle={{ flexGrow: 1 }}
+                scrollEnabled={false}
+                enableOnAndroid
+                keyboardShouldPersistTaps="handled">
+
                 <CustomInput
                     label="E-mail"
                     icon="md-person"
@@ -47,7 +55,7 @@ class Signup_1st extends React.Component {
                     <AuthButton type="facebook" />
                     <AuthButton type="google" />
                 </View>
-            </View>
+            </KeyboardAwareScrollView>
         )
     }
 }

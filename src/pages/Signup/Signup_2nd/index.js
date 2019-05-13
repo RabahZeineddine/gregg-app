@@ -6,6 +6,7 @@ import {
 import style from './style'
 import CustomInput from '../../../components/CustomInput';
 import CustomButton from '../../../components/CustomButton';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 class Signup_2nd extends React.Component {
 
@@ -19,7 +20,13 @@ class Signup_2nd extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <KeyboardAwareScrollView
+                style={styles.container}
+                resetScrollToCoords={{ x: 0, y: 0 }}
+                contentContainerStyle={{ flexGrow: 1 }}
+                scrollEnabled={false}
+                enableOnAndroid
+                keyboardShouldPersistTaps="handled">
                 <CustomInput
                     label="Nome"
                     icon="md-person"
@@ -41,7 +48,7 @@ class Signup_2nd extends React.Component {
                 <View style={styles.btnsHolder}>
                     <CustomButton text="Continuar" onPress={this.props.nextStep} />
                 </View>
-            </View>
+            </KeyboardAwareScrollView>
         )
     }
 }

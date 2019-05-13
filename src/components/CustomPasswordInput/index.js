@@ -32,7 +32,7 @@ class CustomPasswordInput extends React.Component {
     }
 
     render() {
-        const { label, setRef, validationValue, returnKeyType } = this.props
+        const { label, setRef, validationValue, returnKeyType, onSubmitEditing } = this.props
         return (
             <Animated.View style={[styles.holder, {
                 transform: [{
@@ -57,6 +57,7 @@ class CustomPasswordInput extends React.Component {
                         placeholderTextColor={this.state.error ? colors.red : null}
                         onFocus={this.resetError}
                         secureTextEntry={!this.state.showPassword}
+                        onSubmitEditing={onSubmitEditing || null}
                     />
 
                     <TouchableOpacity onPress={() => this.setState((previousState) => ({ showPassword: !previousState.showPassword, error: false }))}>
