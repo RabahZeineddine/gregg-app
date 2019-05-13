@@ -2,26 +2,19 @@ import colors from "../../utils/colors";
 
 export default ({
     container: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        zIndex: 9999,
         flex: 1,
-        paddingTop: '30%',
-        paddingRight: 16,
+        justifyContent: 'center',
+        backgroundColor: colors.modal_background,
         paddingLeft: 16,
-        backgroundColor: colors.modal_background
-
+        paddingRight: 16
     },
     holder: {
-        flex: 1,
         backgroundColor: colors.white,
         borderRadius: 16,
-        padding: 32,
-        paddingRight: 64,
-        paddingLeft: 64
+        paddingRight: 48,
+        paddingLeft: 48,
+        paddingTop: 32,
+        paddingBottom: 32
     },
     imageHolder: {
         alignItems: 'center',
