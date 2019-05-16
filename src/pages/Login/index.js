@@ -1,13 +1,10 @@
 import React from 'react'
 import {
     View,
-    Text,
     StyleSheet,
     Image,
-    TouchableOpacity,
     Keyboard,
-    Alert,
-    ActivityIndicator
+    Vibration
 } from 'react-native'
 import style from './style'
 
@@ -19,36 +16,76 @@ import CustomInput from '../../components/CustomInput'
 import colors from '../../utils/colors';
 import StatusBar from '../../components/StatusBar'
 import { connect } from 'react-redux'
-import { verifyRegisteredUser } from '../../actions/usersActions';
+import { login } from '../../actions/usersActions';
+import CustomButton from '../../components/CustomButton';
+import CustomActivityIndicator from '../../components/CustomActivityIndicator';
+import CustomModal from '../../components/CustomModal';
+import AuthButton from '../../components/AuthButton';
+
 
 class Login extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.cpfField = null
+    }
 
     static navigationOptions = {
         header: null
     }
 
     state = {
-        password: ''
+        password: {
+            value: '',
+            valid: true,
+            error: ''
+        }
     }
 
     handleSubmit = () => {
 
         Keyboard.dismiss()
 
-        if (this.state.password.trim() != '') {
+        const { password } = this.state
 
+        if (password.value.trim() != '') {
+            const { user } = this.props
+            const data = {
+                cpf: user.profile.cpf,
+                password: password.value
+            }
+            this.props.login(data)
+                .then(() => {
+                    const { user } = this.props
+                    if(user.isLogged){
+                        this.props.navigation.navigate('App')
+                    }
+                })
+
+        } else {
+            this.setState((previousState) => ({
+                password: {
+                    ...previousState['password'],
+                    error: 'Preenche o campo',
+                    valid: false
+                }
+            }))
+
+            setTimeout(() => {
+                Vibration.vibrate(200)
+            })
         }
     }
 
     handleInputChange = key => (value) => {
-        this.setState({ [key]: value })
+        this.setState((previousState) => ({
+            [key]: { ...previousState[key], value }
+        }))
     }
 
     render() {
 
         const { user } = this.props
-
-        if (user.error) Alert.alert('Erro', user.error.detail)
 
         return (
             <LinearGradient
@@ -57,9 +94,10 @@ class Login extends React.Component {
             >
                 <View style={styles.container}>
                     {user.isFetching && (
-                        <View style={style.loader}>
-                            <ActivityIndicator size="large" color={colors.white} />
-                        </View>
+                        <CustomActivityIndicator size="large" />
+                    )}
+                    {user.error && (
+                        <CustomModal title="Erro!" description={user.error.detail} />
                     )}
                     <StatusBar />
                     <KeyboardAwareScrollView
@@ -83,14 +121,23 @@ class Login extends React.Component {
                                 label="Senha"
                                 onChangeText={this.handleInputChange('password')}
                                 onSubmitEditing={this.handleSubmit}
-                                value={this.state.password}
-                                icon="lock"
-                                iconSource="FontAwesome"
+                                validationValue={this.state.password}
+                                type={"password"}
+                                returnKeyType="done"
+                                resetValidation={this.resetInputValidation('password')}
                             />
                             <View style={styles.btnHolder}>
-                                <TouchableOpacity style={styles.btn} onPress={this.handleSubmit} >
-                                    <Text style={styles.btnText}>Entrar</Text>
-                                </TouchableOpacity>
+                                <CustomButton text="Entrar" onPress={this.handleSubmit} />
+                            </View>
+                            <View style={styles.textBtnHolder}>
+                                <CustomButton text="Esqueci minha senha" type="text" />
+                            </View>
+                            <View style={styles.authBtnsHolder}>
+                                <AuthButton type="facebook" />
+                                <AuthButton type="google" />
+                            </View>
+                            <View style={styles.textBtnHolder}>
+                                <CustomButton text="Voltar" onPress={this.goBack} type="text" textStyle={{ textDecorationLine: 'underline' }} />
                             </View>
                         </View>
 
@@ -98,6 +145,14 @@ class Login extends React.Component {
                 </View>
             </LinearGradient>
         )
+    }
+
+    resetInputValidation = (key) => () => {
+        this.setState((previousState) => ({ [key]: { ...previousState[key], valid: true } }))
+    }
+
+    goBack = () => {
+        this.props.navigation.goBack()
     }
 }
 
@@ -111,7 +166,7 @@ const mapStateToProps = ({ user }) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        verifyRegisteredUser: (user) => dispatch(verifyRegisteredUser(user))
+        login: (user) => dispatch(login(user))
     }
 }
 
