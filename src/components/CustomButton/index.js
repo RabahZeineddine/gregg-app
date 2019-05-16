@@ -18,12 +18,20 @@ class CustomButton extends React.Component {
 
     render() {
 
-        const { text, backgroundColor, ...rest } = this.props
-        let btnStyle = [styles.btn]
+        const { text, backgroundColor, type, textStyle, ...rest } = this.props
+        let btnStyle
+        let btnText = [styles.btnText]
+        if (type == "text") {
+            btnStyle = []
+        } else {
+            btnStyle = [styles.btn]
+        }
         if (backgroundColor) btnStyle.push({ backgroundColor })
+
+        if (textStyle) btnText.push(textStyle)
         return (
             <TouchableOpacity style={btnStyle} {...rest} >
-                <Text style={styles.btnText}>{text}</Text>
+                <Text style={btnText}>{text}</Text>
             </TouchableOpacity>
         )
     }
