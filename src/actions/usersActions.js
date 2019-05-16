@@ -63,10 +63,10 @@ const verifyRegisteredUserFailure = (error) => {
     }
 }
 
-const verifyRegisteredUserSuccess = (users, cpf) => {
+const verifyRegisteredUserSuccess = ({ registered }, cpf) => {
     return {
         type: VERIFY_REGISTERED_USER_SUCCESS,
-        users,
+        registered,
         cpf
     }
 }
@@ -75,8 +75,8 @@ export const verifyRegisteredUser = (user) => dispatch => {
     dispatch(verifyRegisteredUserRequest())
     return UserAPI
         .verifyRegisteredUser(user)
-        .then(users => {
-            return dispatch(verifyRegisteredUserSuccess(users, user.cpf))
+        .then(result => {
+            return dispatch(verifyRegisteredUserSuccess(result, user.cpf))
         })
         .catch(err => dispatch(verifyRegisteredUserFailure(err)))
 }
