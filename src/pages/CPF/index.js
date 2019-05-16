@@ -1,11 +1,9 @@
 import React from 'react'
 import {
     View,
-    Text,
     StyleSheet,
     Image,
     Keyboard,
-    Alert,
     Vibration
 } from 'react-native'
 import style from './style'
@@ -50,15 +48,15 @@ class CPF extends React.Component {
             const user = {
                 cpf: this.cpfField.getRawValue()
             }
-            // this.props.verifyRegisteredUser(user)
-                // .then(() => {
-                    // const { user } = this.props
-                    // if (user.isRegistered) {
-                        // Alert.alert('Aviso', 'Usuario cadastrado')
-                    // } else if (!user.error) {
+            this.props.verifyRegisteredUser(user)
+                .then(() => {
+                    const { user } = this.props
+                    if (user.isRegistered) {
+                        this.props.navigation.navigate('Login')
+                    } else if (!user.error) {
                         this.props.navigation.navigate('SignupIntroduction')
-                    // }
-                // })
+                    }
+                })
 
         } else {
             this.setState((previousState) => ({
