@@ -3,31 +3,26 @@ import Helper from './helper'
 import ErrorHandler from './ErrorHandler'
 
 
-const helper = new Helper()
-
-
-
 export const login = async (user) => {
 
-    return fetch(`${env.API}/auth/login`, {
+    return fetch(`${env.API}/users/login`, {
         headers,
         method: 'POST',
         body: JSON.stringify(user)
     })
-        .then(helper.checkFetchResponse)
+        .then(Helper.checkFetchResponse)
         .catch(err => {
-            console.log('Error')
-            console.log(err)
+            return Promise.reject(new ErrorHandler(err || 500).format())
         })
 }
 
 export const verifyRegisteredUser = async (user) => {
-    return fetch(`${env.API}/users?cpf=${user.cpf}`, {
+    return fetch(`${env.API}/users/cpf/${user.cpf}`, {
         headers,
         method: 'GET'
-    }).then(helper.checkFetchResponse)
+    }).then(Helper.checkFetchResponse)
         .catch(err => {
-            return Promise.reject(new ErrorHandler(err.status || 500).format())
+            return Promise.reject(new ErrorHandler(err || 500).format())
         })
 }
 
@@ -37,8 +32,8 @@ export const signup = async (user) => {
         method: 'POST',
         timeout: 5000,
         body: JSON.stringify(user)
-    }).then(helper.checkFetchResponse)
+    }).then(Helper.checkFetchResponse)
         .catch(err => {
-            return Promise.reject(new ErrorHandler(err.status || 500).format())
+            return Promise.reject(new ErrorHandler(err || 500).format())
         })
 }
