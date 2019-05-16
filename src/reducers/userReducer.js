@@ -29,6 +29,8 @@ function user(state = initialUserState, action) {
         case LOGIN_USER_REQUEST:
             return {
                 ...state,
+                isLogged: false,
+                isRegistered: false,
                 isFetching: true,
                 fetchingError: false,
                 error: null
@@ -43,12 +45,12 @@ function user(state = initialUserState, action) {
             }
         case LOGIN_USER_FAILURE:
             return {
+                ...state,
                 isLogged: false,
                 isFetching: false,
                 fetchingError: true,
                 error: action.error,
-                lastUpdated: new Date(),
-                profile: {}
+                lastUpdated: new Date()
             }
         case LOGOUT_USER:
             return {
@@ -61,7 +63,8 @@ function user(state = initialUserState, action) {
                 isFetching: true,
                 fetchingError: false,
                 error: null,
-                isRegistered: false
+                isRegistered: false,
+                isLogged: false,
             }
 
         case VERIFY_REGISTERED_USER_FAILURE:
@@ -78,10 +81,9 @@ function user(state = initialUserState, action) {
                 isFetching: false,
                 fetchingError: false,
                 lastUpdated: new Date(),
-                isRegistered: action.users.length > 0,
-                profile: action.users.length > 0 ?
-                    action.users[0] :
-                    { cpf: action.cpf }
+                isRegistered: action.registered,
+                isLogged: action.registered,
+                profile: { cpf: action.cpf }
             }
         case SIGNUP_USER_REQUEST:
             return {
@@ -103,13 +105,11 @@ function user(state = initialUserState, action) {
         case SIGNUP_USER_SUCCESS:
             return {
                 ...state,
-                isRegistered: true,
                 isFetching: false,
                 fetchingError: false,
                 lastUpdated: new Date(),
-                isRegistered: action.users.length > 0,
-                profile: action.users.length > 0 ?
-                    action.users[0] : {}
+                isRegistered: action.user ? true : false,
+                profile: action.user
             }
         default:
             return state
