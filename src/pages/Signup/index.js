@@ -20,6 +20,7 @@ import CustomActivityIndicator from '../../components/CustomActivityIndicator';
 import CustomModal from '../../components/CustomModal';
 import { connect } from 'react-redux'
 import { signup } from '../../actions/usersActions'
+import Helper from '../../utils/helper';
 
 
 const customStyles = {
@@ -117,7 +118,7 @@ class Signup extends React.Component {
                             title="Tudo certo!"
                             description="Eba! Seu cadastro foi efetuado com sucesso, agora vamos para a parte que importa!"
                             buttons={[
-                                { text: 'Vamos nessa!', onPress: () => this.setState({ showModal: false }) }
+                                { text: 'Vamos nessa!', onPress: () => this.props.navigation.navigate('App') }
                             ]}
                             success={true} withImage={true} />
                     ))}
@@ -394,15 +395,11 @@ class Signup extends React.Component {
             email: this.state.email.value,
             password: this.state.password.value,
             gender: this.state.sex.value,
-            birthday: this.state.birthday.value,
+            birthday: Helper.stringToDate(this.state.birthday.value),
             cpf: this.props.user.profile.cpf
         }
 
         this.props.signup(user)
-            .then(() => {
-                const { user } = this.props
-                console.log(user)
-            })
     }
 }
 
