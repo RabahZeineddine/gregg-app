@@ -1,11 +1,13 @@
-import colors from "../../utils/colors";
+import {
+    Platform
+} from 'react-native'
 
 export default ({
     container: {
         flex: 1
     },
     logoHolder: {
-        paddingTop: 50,
+        paddingTop: '10%',
         alignItems: 'center',
     },
     logo: {
@@ -14,37 +16,26 @@ export default ({
     },
     formContainer: {
         width: '100%',
-        paddingLeft: 20,
-        paddingRight: 20,
-        marginTop: 48,
-        marginTop: 64,
+        paddingLeft: '4%',
+        paddingRight: '4%',
+        marginTop: Platform.select({
+            ios: '9.6%',
+            android: '5%'
+        })
     },
     btnHolder: {
-        paddingTop: 46,
+        paddingTop: '9.2%',
         alignItems: 'center',
         justifyContent: 'center'
     },
-    btn: {
-        padding: 15,
-        paddingLeft: 64,
-        paddingRight: 64,
-        backgroundColor: colors.dark_gray,
-        borderRadius: 18
-    },
-    btnText: {
-        color: colors.white,
-        fontSize: 18
-    },
-    loader: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        opacity: 0.5,
-        backgroundColor: 'black',
-        justifyContent: 'center',
+    textBtnHolder: {
+        paddingTop: '6.4%',
         alignItems: 'center',
-        zIndex: 99999
+        justifyContent: 'center'
+    },
+    authBtnsHolder: {
+        paddingTop: '0.8%',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 })
