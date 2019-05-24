@@ -10,18 +10,84 @@ import { Provider } from 'react-redux'
 import reducer from './src/reducers'
 import thunk from 'redux-thunk'
 import { Font } from 'expo';
+import Activities from './src/pages/Activities'
+import Coupons from './src/pages/Coupons'
+import { View, Text, TouchableOpacity } from 'react-native'
 
 import {
   createStackNavigator,
   createAppContainer,
-  createSwitchNavigator
+  createSwitchNavigator,
+  createDrawerNavigator
 } from 'react-navigation'
+import colors from './src/utils/colors';
+import MenuButton from './src/components/MenuButton';
+import Menu from './src/components/Menu';
 
-const AppStack = createStackNavigator({
+
+const navigationOptions = ({ navigation }) => ({
+  headerMode: 'screen',
+  headerTitle: <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+    <Text style={{
+      color: colors.white,
+      fontSize: 24,
+      fontFamily: 'Overpass-Bold',
+      textAlign: 'center',
+      flex: 1
+    }}>gregg</Text>
+  </TouchableOpacity>,
+  headerStyle: {
+    backgroundColor: colors.orange
+  },
+  headerLeft: (<MenuButton onPress={navigation.openDrawer} />),
+  headerRight: (<View />)
+})
+
+const HomeNavigator = createStackNavigator({
   Home: {
-    screen: Home
+    screen: Home,
+    navigationOptions
   }
 })
+
+const ActivitiesNavigator = createStackNavigator({
+  Activities: {
+    screen: Activities,
+    navigationOptions
+  }
+})
+const CouponsNavigator = createStackNavigator({
+  Coupons: {
+    screen: Coupons,
+    navigationOptions
+  }
+})
+
+const AppStack = createDrawerNavigator({
+  Home: {
+    screen: HomeNavigator,
+    navigationOptions: {
+      drawerLabel: 'Início'
+    }
+  },
+  Activities: {
+    screen: ActivitiesNavigator,
+    navigationOptions: {
+      drawerLabel: 'Atividades recentes'
+    }
+  },
+  Coupons: {
+    screen: CouponsNavigator,
+    navigationOptions: {
+      drawerLabel: 'Cupons de resgate'
+    }
+  }
+},
+  {
+    initialRouteName: 'Home',
+    contentComponent: props => <Menu {...props} />
+  }
+)
 
 const AuthStack = createStackNavigator(
   {
