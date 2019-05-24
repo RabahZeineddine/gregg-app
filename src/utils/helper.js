@@ -21,6 +21,10 @@ class Helper {
         return new Date(strData.split('-').reverse().join('-'))
     }
 
+    static formatCPF(cpf) {
+        return `${cpf.toString().substring(0, 3)}.${cpf.toString().substring(3, 6)}.${cpf.toString().substring(6, 9)}-${cpf.toString().substring(9)}`
+    }
+
 }
 
 export default Helper
