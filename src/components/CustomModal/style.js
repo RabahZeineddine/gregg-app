@@ -32,6 +32,13 @@ export default ({
         fontFamily: 'Overpass-SemiBold'
     },
     subtitle: {
+        color: colors.orange,
+        marginTop: 32,
+        fontSize: 24,
+        textAlign: 'center',
+        fontFamily: 'Overpass-SemiBold'
+    },
+    description: {
         color: colors.text_gray,
         marginTop: 10,
         fontSize: 14,

@@ -11,6 +11,7 @@ import {
 import PropTypes from 'prop-types'
 import SuccessImage from '../../assets/Gregg-Sucesso.png'
 import ErrorImage from '../../assets/Gregg-Falha.png'
+import GreggAviso from '../../assets/Gregg-Aviso.png'
 
 import style from './style'
 import CustomButton from '../CustomButton';
@@ -21,11 +22,13 @@ class CustomModal extends React.Component {
 
     static propTypes = {
         title: PropTypes.string,
+        subtitle: PropTypes.string,
         description: PropTypes.string,
         withoutImage: PropTypes.bool,
         customImageName: PropTypes.string,
         success: PropTypes.bool,
-        buttons: PropTypes.array
+        buttons: PropTypes.array,
+        onDismiss: PropTypes.func
     }
 
     state = {
@@ -40,6 +43,24 @@ class CustomModal extends React.Component {
             text: 'OK',
             onPress: this.dismissModal
         })
+
+        let icon
+        if (!this.props.withoutImage) {
+            if (this.props.success) icon = SuccessImage
+            else if (this.props.customImageName) {
+                switch (this.props.customImageName) {
+                    case 'Gregg-Aviso':
+                        icon = GreggAviso
+                        break;
+                    default:
+                        icon = ErrorImage
+                        break
+                }
+            }
+            else {
+                icon = ErrorImage
+            }
+        }
 
         return (
 
@@ -57,14 +78,17 @@ class CustomModal extends React.Component {
                             <View style={styles.imageHolder}>
                                 <Image
                                     style={styles.image}
-                                    source={this.props.success ? SuccessImage : ErrorImage}
+                                    source={icon}
                                     resizeMode="contain"
                                 />
                             </View>
                         )}
 
                         <Text style={styles.title}>{this.props.title || ''}</Text>
-                        <Text style={styles.subtitle}>{this.props.description || ''}</Text>
+                        {this.props.subtitle && (
+                            <Text style={styles.subtitle}>{this.props.subtitle || ''}</Text>
+                        )}
+                        <Text style={styles.description}>{this.props.description || ''}</Text>
 
 
                         <View style={styles.btnHolder}>
@@ -79,6 +103,9 @@ class CustomModal extends React.Component {
 
     dismissModal = () => {
         this.setState({ modalVisible: false })
+        if (this.props.onDismiss) {
+            this.props.onDismiss()
+        }
     }
 }
 
