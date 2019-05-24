@@ -16,12 +16,32 @@ import {
 
 const initialUserState = {
     isRegistered: false,
-    isLogged: false,
+    isLogged: true,
     isFetching: false,
     fetchingError: false,
     lastUpdated: 0,
-    profile: {}
+    profile: {
+        "__v": 0,
+        "_id": "5cd9c3ccf61e58317431e912",
+        "birthday": "2019-05-13T00:00:00.000Z",
+        "cpf": 23725843830,
+        "email": "asd@asd.com",
+        "gender": "Male",
+        "myredeems": [],
+        "name": "Rabah Zein",
+        "password": "$2a$10$UQaPZxS1/KUWGMu69M95j.qCeBT75lm7fMQ7yiM0lRNo07ZkKqHT2",
+        "points": [],
+        "visits": [],
+    }
 }
+// const initialUserState = {
+//     isRegistered: false,
+//     isLogged: false,
+//     isFetching: false,
+//     fetchingError: false,
+//     lastUpdated: 0,
+//     profile: {}
+// }
 
 
 function user(state = initialUserState, action) {
