@@ -396,7 +396,7 @@ class Signup extends React.Component {
             password: this.state.password.value,
             gender: this.state.sex.value,
             birthday: Helper.stringToDate(this.state.birthday.value),
-            cpf: this.props.user.profile.cpf
+            cpf: this.props.user.profile.cpf.toString()
         }
 
         this.props.signup(user)

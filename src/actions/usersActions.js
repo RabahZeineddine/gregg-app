@@ -63,10 +63,10 @@ const verifyRegisteredUserFailure = (error) => {
     }
 }
 
-const verifyRegisteredUserSuccess = ({ registered }, cpf) => {
+const verifyRegisteredUserSuccess = ({ isAppUser }, cpf) => {
     return {
         type: VERIFY_REGISTERED_USER_SUCCESS,
-        registered,
+        isAppUser,
         cpf
     }
 }

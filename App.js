@@ -12,7 +12,7 @@ import thunk from 'redux-thunk'
 import { Font } from 'expo';
 import Activities from './src/pages/Activities'
 import Coupons from './src/pages/Coupons'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native'
 
 import {
   createStackNavigator,
@@ -23,6 +23,10 @@ import {
 import colors from './src/utils/colors';
 import MenuButton from './src/components/MenuButton';
 import Menu from './src/components/Menu';
+import TermsOfUse from './src/pages/TermsOfUse';
+import PrivacyPolicies from './src/pages/PrivacyPolicies';
+import Logout from './src/pages/Logout';
+import Activity from './src/pages/Activity';
 
 
 const navigationOptions = ({ navigation }) => ({
@@ -47,12 +51,22 @@ const HomeNavigator = createStackNavigator({
   Home: {
     screen: Home,
     navigationOptions
+  },
+  Activity: {
+    screen: Activity,
+    navigationOptions
   }
+},{
+  initialRouteName: 'Activity'
 })
 
 const ActivitiesNavigator = createStackNavigator({
   Activities: {
     screen: Activities,
+    navigationOptions
+  },
+  Activity: {
+    screen: Activity,
     navigationOptions
   }
 })
@@ -62,26 +76,88 @@ const CouponsNavigator = createStackNavigator({
     navigationOptions
   }
 })
+const TermsOfUseNavigator = createStackNavigator({
+  Coupons: {
+    screen: TermsOfUse,
+    navigationOptions
+  }
+})
+const PrivacyPoliciesNavigator = createStackNavigator({
+  Coupons: {
+    screen: PrivacyPolicies,
+    navigationOptions
+  }
+})
+const LogoutNavigator = createStackNavigator({
+  Coupons: {
+    screen: Logout,
+    navigationOptions
+  }
+})
+
+
 
 const AppStack = createDrawerNavigator({
   Home: {
     screen: HomeNavigator,
     navigationOptions: {
-      drawerLabel: 'Início'
+      drawerLabel: 'Início',
+      drawerIcon: ({ tintColor }) => (
+        <Image source={require('./src/assets/home.png')} style={{ tintColor: tintColor, width: 40, height: 40 }}
+        />
+      )
     }
   },
   Activities: {
     screen: ActivitiesNavigator,
     navigationOptions: {
-      drawerLabel: 'Atividades recentes'
+      drawerLabel: 'Atividades recentes',
+      drawerIcon: ({ tintColor }) => (
+        <Image source={require('./src/assets/Activities.png')} style={{ tintColor: tintColor, width: 40, height: 40 }}
+        />
+      )
     }
   },
   Coupons: {
     screen: CouponsNavigator,
     navigationOptions: {
-      drawerLabel: 'Cupons de resgate'
+      drawerLabel: 'Cupons de resgate',
+      drawerIcon: ({ tintColor }) => (
+        <Image source={require('./src/assets/Coupons.png')} style={{ tintColor: tintColor, width: 40, height: 40 }}
+        />
+      )
     }
-  }
+  },
+  TermsOfUse: {
+    screen: TermsOfUseNavigator,
+    navigationOptions: {
+      drawerLabel: 'Termos de uso',
+      drawerIcon: ({ tintColor }) => (
+        <Image source={require('./src/assets/Terms.png')} style={{ tintColor: tintColor, width: 40, height: 40 }}
+        />
+      )
+    }
+  },
+  PrivacyPolicies: {
+    screen: PrivacyPoliciesNavigator,
+    navigationOptions: {
+      drawerLabel: 'Políticas de privacidade',
+      drawerIcon: ({ tintColor }) => (
+        <Image source={require('./src/assets/Policies.png')} style={{ tintColor: tintColor, width: 40, height: 40 }}
+        />
+      )
+    }
+  },
+  Logout: {
+    screen: LogoutNavigator,
+    navigationOptions: {
+      drawerLabel: 'Sair',
+      drawerIcon: ({ tintColor }) => (
+        <Image source={require('./src/assets/Logout.png')} style={{ tintColor: tintColor, width: 40, height: 40 }}
+        />
+      )
+    }
+  },
 },
   {
     initialRouteName: 'Home',
