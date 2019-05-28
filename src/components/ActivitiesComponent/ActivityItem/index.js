@@ -71,7 +71,7 @@ class ActivityItem extends React.Component {
         const subtitle = productName ? place : null
 
         return (
-            <TouchableOpacity style={styles.holder} >
+            <TouchableOpacity style={styles.holder} onPress={() => this.props.navigation.navigate('Activity')}>
                 {icon && (
                     <View style={styles.iconHolder}>
                         <Image

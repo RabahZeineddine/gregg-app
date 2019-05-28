@@ -6,7 +6,6 @@ import {
     StyleSheet,
     FlatList,
     TouchableOpacity,
-    Platform
 } from 'react-native'
 import Collapsible from 'react-native-collapsible'
 import style from './style'
@@ -25,7 +24,7 @@ class ActivitiesComponent extends React.Component {
 
     renderITem = (item) => {
         return (
-            <ActivityItem item={item.item} />
+            <ActivityItem item={item.item} navigation={this.props.navigation} />
         )
     }
 
