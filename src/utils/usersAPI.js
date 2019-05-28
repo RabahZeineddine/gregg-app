@@ -5,7 +5,7 @@ import ErrorHandler from './ErrorHandler'
 
 export const login = async (user) => {
 
-    return fetch(`${env.API}/users/login`, {
+    return fetch(`${env.API}/userapp/login`, {
         headers,
         method: 'POST',
         body: JSON.stringify(user)
@@ -17,7 +17,7 @@ export const login = async (user) => {
 }
 
 export const verifyRegisteredUser = async (user) => {
-    return fetch(`${env.API}/users/cpf/${user.cpf}`, {
+    return fetch(`${env.API}/userapp/cpf/check/${user.cpf}`, {
         headers,
         method: 'GET'
     }).then(Helper.checkFetchResponse)
@@ -27,7 +27,7 @@ export const verifyRegisteredUser = async (user) => {
 }
 
 export const signup = async (user) => {
-    return fetch(`${env.API}/users/`, {
+    return fetch(`${env.API}/userapp/register`, {
         headers,
         method: 'POST',
         timeout: 5000,
