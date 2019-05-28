@@ -30,9 +30,9 @@ class ProfileComponent extends React.Component {
                     <Text style={styles.name}>{user.profile.name}</Text>
                 </View>
                 <View style={styles.itemsHolder}>
-                    <ProfileItem title="Visitas realizadas" icon="placeholder" value={350} />
-                    <ProfileItem title="Resgates realizados" icon="shopping-cart" value={50} />
-                    <ProfileItem title="Estabelecimentos visitados" icon="shop" value={15} />
+                    <ProfileItem title="Visitas realizadas" icon="placeholder" value={user.profile.placesVisited || 0} />
+                    <ProfileItem title="Resgates realizados" icon="shopping-cart" value={user.profile.numberOfRedeems || 0} />
+                    <ProfileItem title="Estabelecimentos visitados" icon="shop" value={user.profile.visits || 0} />
                 </View>
             </View>
         )
