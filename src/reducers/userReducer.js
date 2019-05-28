@@ -21,17 +21,18 @@ const initialUserState = {
     fetchingError: false,
     lastUpdated: 0,
     profile: {
-        "__v": 0,
-        "_id": "5cd9c3ccf61e58317431e912",
-        "birthday": "2019-05-13T00:00:00.000Z",
+        "appActive": true,
+        "birthday": "1995-05-27T00:00:00.000Z",
         "cpf": 23725843830,
-        "email": "asd@asd.com",
+        "email": "rabah.zeineddine@gmail.com",
+        "feed": [],
         "gender": "Male",
-        "myredeems": [],
-        "name": "Rabah Zein",
-        "password": "$2a$10$UQaPZxS1/KUWGMu69M95j.qCeBT75lm7fMQ7yiM0lRNo07ZkKqHT2",
-        "points": [],
-        "visits": [],
+        "id": "5cec448462df20285a091373",
+        "name": "Rabah Zeineddine",
+        "numberOfRedeems": 0,
+        "placesVisited": 0,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjZWM0NDg0NjJkZjIwMjg1YTA5MTM3MyIsImV4cCI6MTU1OTg1MTkwOCwiaWF0IjoxNTU4OTg3OTA4fQ.ILEsvmW1FzbK5JKs-bEtFI4UHTQLi-Yh8r3YFX8OqHo",
+        "visits": 0,
     }
 }
 // const initialUserState = {
@@ -101,8 +102,8 @@ function user(state = initialUserState, action) {
                 isFetching: false,
                 fetchingError: false,
                 lastUpdated: new Date(),
-                isRegistered: action.registered,
-                isLogged: action.registered,
+                isRegistered: action.isAppUser,
+                isLogged: action.isAppUser,
                 profile: { cpf: action.cpf }
             }
         case SIGNUP_USER_REQUEST:
@@ -129,7 +130,7 @@ function user(state = initialUserState, action) {
                 fetchingError: false,
                 lastUpdated: new Date(),
                 isRegistered: action.user ? true : false,
-                profile: action.user
+                profile: { ...action.user }
             }
         default:
             return state
