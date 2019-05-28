@@ -5,6 +5,7 @@ export default COLORS = {
     orange: '#FF6B00',
     light_orange: '#FF9A51',
     text_gray: '#999999',
+    text_light_gray: '#868686',
     green: '#24A641',
     background_purple: '#DFDEEE',
     step_indicator_purple: '#6455A3',
