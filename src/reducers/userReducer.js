@@ -10,39 +10,21 @@ import {
     VERIFY_REGISTERED_USER_SUCCESS,
     SIGNUP_USER_FAILURE,
     SIGNUP_USER_REQUEST,
-    SIGNUP_USER_SUCCESS
+    SIGNUP_USER_SUCCESS,
+    CHECKIN_INFO_FAILURE,
+    CHECKIN_INFO_REQUEST,
+    CHECKIN_INFO_SUCCESS
 } from '../actions/usersActions'
 
 
 const initialUserState = {
     isRegistered: false,
-    isLogged: true,
+    isLogged: false,
     isFetching: false,
     fetchingError: false,
     lastUpdated: 0,
-    profile: {
-        "appActive": true,
-        "birthday": "1995-05-27T00:00:00.000Z",
-        "cpf": 23725843830,
-        "email": "rabah.zeineddine@gmail.com",
-        "feed": [],
-        "gender": "Male",
-        "id": "5cec448462df20285a091373",
-        "name": "Rabah Zeineddine",
-        "numberOfRedeems": 0,
-        "placesVisited": 0,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjZWM0NDg0NjJkZjIwMjg1YTA5MTM3MyIsImV4cCI6MTU1OTg1MTkwOCwiaWF0IjoxNTU4OTg3OTA4fQ.ILEsvmW1FzbK5JKs-bEtFI4UHTQLi-Yh8r3YFX8OqHo",
-        "visits": 0,
-    }
+    profile: {}
 }
-// const initialUserState = {
-//     isRegistered: false,
-//     isLogged: false,
-//     isFetching: false,
-//     fetchingError: false,
-//     lastUpdated: 0,
-//     profile: {}
-// }
 
 
 function user(state = initialUserState, action) {
@@ -131,6 +113,34 @@ function user(state = initialUserState, action) {
                 lastUpdated: new Date(),
                 isRegistered: action.user ? true : false,
                 profile: { ...action.user }
+            }
+
+        case CHECKIN_INFO_REQUEST:
+            return {
+                ...state,
+                checkinInfo: {
+                    isFetching: true,
+                    fetchingError: false,
+                    error: null
+                }
+            }
+
+        case CHECKIN_INFO_FAILURE:
+            return {
+                ...state,
+                checkinInfo: {
+                    isFetching: false,
+                    fetchingError: true,
+                    error: action.error
+                }
+            }
+        case CHECKIN_INFO_SUCCESS:
+            return {
+                ...state,
+                checkinInfo: {
+                    isFetching: false,
+                    ...action.store
+                }
             }
         default:
             return state
