@@ -1,4 +1,5 @@
 import * as UserAPI from '../utils/usersAPI'
+import { AsyncStorage } from 'react-native'
 
 export const LOGIN_USER_REQUEST = 'LOGIN_USER_REQUEST'
 export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE'
@@ -12,6 +13,10 @@ export const VERIFY_REGISTERED_USER_SUCCESS = 'VERIFY_REGISTERED_USER_SUCCESS'
 export const SIGNUP_USER_REQUEST = 'SIGNUP_USER_REQUEST'
 export const SIGNUP_USER_FAILURE = 'SIGNUP_USER_FAILURE'
 export const SIGNUP_USER_SUCCESS = 'SIGNUP_USER_SUCCESS'
+
+export const CHECKIN_INFO_REQUEST = 'CHECKIN_INFO_REQUEST'
+export const CHECKIN_INFO_FAILURE = 'CHECKIN_INFO_FAILURE'
+export const CHECKIN_INFO_SUCCESS = 'CHECKIN_INFO_SUCCESS'
 
 
 const loginUserRequest = () => {
@@ -45,6 +50,7 @@ export const login = (user) => dispatch => {
     return UserAPI
         .login(user)
         .then(loggedUser => {
+            AsyncStorage.setItem('token', loggedUser.token)
             return dispatch(loginUserSuccess(loggedUser))
         })
         .catch(err => dispatch(loginUserFailure(err)))
@@ -107,7 +113,37 @@ export const signup = (user) => dispatch => {
     return UserAPI
         .signup(user)
         .then(newUser => {
+            AsyncStorage.setItem('token', newUser.token)
             return dispatch(signupUserSuccess(newUser))
         })
         .catch(err => dispatch(signupUserFailure(err)))
+}
+
+
+const checkinInfoRequest = () => {
+    return {
+        type: CHECKIN_INFO_REQUEST
+    }
+}
+
+const checkinInfoSuccess = (store) => {
+    return {
+        type: CHECKIN_INFO_SUCCESS,
+        store
+    }
+}
+
+const checkinInfoFailure = (error) => {
+    return {
+        type: CHECKIN_INFO_FAILURE,
+        error
+    }
+}
+
+export const checkinInfo = (store) => dispatch => {
+    dispatch(checkinInfoRequest())
+    return UserAPI
+        .checkinInfo(store)
+        .then((storeInfo) => dispatch(checkinInfoSuccess(storeInfo)))
+        .catch(err => dispatch(checkinInfoFailure(err)))
 }
