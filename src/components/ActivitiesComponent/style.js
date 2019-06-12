@@ -32,6 +32,9 @@ export default ({
         borderRadius: 6,
         padding: 10
     },
+    container: {
+        flex: 1,
+    },
     footerBtn: {
         backgroundColor: colors.orange,
         padding: 8,

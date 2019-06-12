@@ -13,6 +13,8 @@ import style from './style'
 import { Ionicons } from '@expo/vector-icons'
 import colors from '../../utils/colors';
 import ActivityItem from './ActivityItem';
+import { connect } from 'react-redux'
+import Helper from '../../utils/helper';
 
 class ActivitiesComponent extends React.Component {
 
@@ -42,16 +44,10 @@ class ActivitiesComponent extends React.Component {
 
     render() {
 
-        const data = [
-            { type: 'checkin', place: 'Conveniência do Galego', date: new Date('2019-02-03T14:37:00'), data: { value: 10 } },
-            { type: 'checkin', place: 'Loja da Márcia', date: new Date('2019-01-23T18:32:00'), data: { value: 10 } },
-            { type: 'resgate', place: 'Loja da Carlinha', productName: 'Par de Brincos', date: new Date('2019-01-15T15:20:00'), data: { value: 70 } },
-            { type: 'checkin', place: 'Loja da Carlinha', date: new Date('2019-01-15T15:20:00'), data: { value: 10 } },
-            { type: 'avaliacao', place: 'Barbearia do Seu João', date: new Date('2019-01-10T10:18:00'), data: { value: 6 } },
-            { type: 'resgate', place: 'Barbearia do Seu João', productName: '1 Cerveja', date: new Date('2019-01-10T10:14:00'), data: { value: 30 } },
-            { type: 'checkin', place: 'Barbearia do Seu João', date: new Date('2019-01-10T10:13:00'), data: { value: 10 } },
-            { type: 'avaliacao', place: 'Doceria da Elisângela', date: new Date('2019-01-07T10:18:00'), data: { value: 10 } }
-        ]
+        let { feeds } = this.props
+        if (this.props.limit) {
+            feeds = Helper.cloneObject(feeds).splice(0, this.props.limit)
+        }
 
         return (
             <View style={styles.holder}>
@@ -63,16 +59,19 @@ class ActivitiesComponent extends React.Component {
                     </TouchableOpacity>
                 </View>
 
-                <Collapsible collapsed={this.state.isCollapsed} >
+                <Collapsible collapsed={this.state.isCollapsed} style={styles.container} >
                     <FlatList
-                        style={styles.holder}
-                        data={data}
+                        style={styles.container}
+                        data={feeds}
                         renderItem={this.renderITem}
                         keyExtractor={this._keyExtractor}
                         ListFooterComponent={this.ActivitiesFooter}
                         ItemSeparatorComponent={() => (
                             <View style={styles.separator} />
                         )}
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        showsHorizontalScrollIndicator={false}
+                        showsVerticalScrollIndicator={false}
                     />
                 </Collapsible>
             </View>
@@ -83,4 +82,11 @@ class ActivitiesComponent extends React.Component {
 
 const styles = StyleSheet.create(style)
 
-export default ActivitiesComponent
+const mapStateToProps = ({ user }) => {
+    return {
+        feeds: user.profile.feeds,
+        user
+    }
+}
+
+export default connect(mapStateToProps)(ActivitiesComponent)

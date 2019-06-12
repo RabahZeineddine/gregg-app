@@ -4,12 +4,13 @@ export default ({
     container: {
         flexGrow: 1,
         backgroundColor: colors.white_background,
-        padding: 20,
+        padding: 20
     },
     holder: {
         backgroundColor: colors.white,
         borderRadius: 6,
         padding: 10,
+        flexGrow: 1,
     },
     contentContainer: {
         flexGrow: 1,

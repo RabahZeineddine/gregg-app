@@ -45,33 +45,46 @@ class ActivityItem extends React.Component {
         let icon
         let value
         let valueStyle
+        let place
+        let productName
+        let date
         switch (item.type) {
             case 'checkin':
                 icon = Placeholder
-                value = `+ ${item.data.value} Gregoletas`
+                value = `+ ${item.value} Gregoletas`
                 valueStyle = 'green'
+                place = item.storeVisited.name
+                date = item.dateOfVisit
                 break;
-            case 'avaliacao':
+            case 'rate':
                 icon = Rating
-                value = `${item.data.value} NPS`
+                value = `${item.rate} NPS`
                 valueStyle = 'gray'
+                place = item.storeRate.name
+                date = item.date
                 break;
-            case 'resgate':
+            case 'redeem':
                 icon = ShopingCart
-                value = `- ${item.data.value} Gregoletas`
+                value = `- ${item.itemRedeem.price} Gregoletas`
                 valueStyle = 'red'
+                place = item.itemRedeem.name
+                date = item.dateOfRedeem
                 break
             default:
                 break;
         }
 
-        const { place, productName, data, type } = item
-
         const title = productName ? productName : place
         const subtitle = productName ? place : null
 
         return (
-            <TouchableOpacity style={styles.holder} onPress={() => this.props.navigation.navigate('Activity')}>
+            <TouchableOpacity style={styles.holder} onPress={() => {
+                if (item.type == 'checkin') {
+                    this.props.navigation.navigate('Activity', {
+                        item
+                    })
+                }
+            }}>
                 {icon && (
                     <View style={styles.iconHolder}>
                         <Image
@@ -89,8 +102,8 @@ class ActivityItem extends React.Component {
                     <Text style={[styles.value, styles[valueStyle]]}>{value}</Text>
                 </View>
                 <View style={styles.dateHolder}>
-                    <Text style={styles.date}>{this.getTime(item.date)}</Text>
-                    <Text style={styles.date}>{this.getDate(item.date)}</Text>
+                    <Text style={styles.date}>{this.getTime(date)}</Text>
+                    <Text style={styles.date}>{this.getDate(date)}</Text>
                 </View>
             </TouchableOpacity>
         )

@@ -9,6 +9,6 @@ export default ({
         backgroundColor: 'black',
         justifyContent: 'center',
         alignItems: 'center',
-        zIndex: 99999
+        zIndex: 99999999
     }
 })
