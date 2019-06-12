@@ -21,7 +21,7 @@ class Home extends React.Component {
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
                     <ProfileComponent />
                     <CouponsComponent navigation={this.props.navigation} />
-                    <ActivitiesComponent navigation={this.props.navigation} />
+                    <ActivitiesComponent navigation={this.props.navigation} limit={8} />
                 </ScrollView>
             </View>
         )
