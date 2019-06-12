@@ -57,7 +57,8 @@ const HomeNavigator = createStackNavigator({
     navigationOptions
   }
 },{
-  initialRouteName: 'Activity'
+  initialRouteName: 'Home',
+  unmountInactiveRoutes: true
 })
 
 const ActivitiesNavigator = createStackNavigator({
