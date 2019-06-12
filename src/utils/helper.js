@@ -25,6 +25,10 @@ class Helper {
         return `${cpf.toString().substring(0, 3)}.${cpf.toString().substring(3, 6)}.${cpf.toString().substring(6, 9)}-${cpf.toString().substring(9)}`
     }
 
+    static cloneObject(obj){
+        return JSON.parse(JSON.stringify(obj))
+    }
+
 }
 
 export default Helper
