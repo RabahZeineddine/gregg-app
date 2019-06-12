@@ -1,6 +1,16 @@
 import { env, headers } from '../config'
 import Helper from './helper'
 import ErrorHandler from './ErrorHandler'
+import { AsyncStorage } from 'react-native'
+
+
+const getToken = () => {
+    return new Promise((resolve, reject) => {
+        AsyncStorage.getItem('token').then(token => {
+            resolve(`Bearer ${token}`)
+        })
+    })
+}
 
 
 export const login = async (user) => {
@@ -37,3 +47,18 @@ export const signup = async (user) => {
             return Promise.reject(new ErrorHandler(err || 500).format())
         })
 }
+
+export const checkinInfo = async (storeId) => {
+    let token = await getToken()
+    console.log(token)
+    return fetch(`${env.API}/userapp/store/${storeId}`, {
+        headers: {
+            ...headers,
+            Authorization: token
+        },
+        method: 'GET'
+    }).then(Helper.checkFetchResponse)
+        .catch(err => {
+            return Promise.reject(new ErrorHandler(err || 500).format())
+        })
+} 
