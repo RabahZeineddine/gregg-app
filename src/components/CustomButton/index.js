@@ -18,11 +18,14 @@ class CustomButton extends React.Component {
 
     render() {
 
-        const { text, backgroundColor, type, textStyle, ...rest } = this.props
+        const { text, backgroundColor, type, textStyle, textColor, ...rest } = this.props
         let btnStyle
         let btnText = [styles.btnText]
         if (type == "text") {
-            btnStyle = []
+            btnStyle = [styles.textTypeBtn]
+            if (textColor) {
+                btnText.push({ color: textColor })
+            }
         } else {
             btnStyle = [styles.btn]
         }

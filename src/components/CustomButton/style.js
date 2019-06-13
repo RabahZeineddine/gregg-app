@@ -8,6 +8,11 @@ export default ({
         borderRadius: 18,
         minWidth: 170
     },
+    textTypeBtn: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        minWidth: 170
+    },
     btnText: {
         color: colors.white,
         fontSize: 18,
