@@ -162,6 +162,7 @@ const AppStack = createDrawerNavigator({
 },
   {
     initialRouteName: 'Home',
+    unmountInactiveRoutes: true,
     contentComponent: props => <Menu {...props} />
   }
 )
