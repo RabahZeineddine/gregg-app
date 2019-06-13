@@ -10,6 +10,7 @@ export default ({
         backgroundColor: colors.white,
         borderRadius: 6,
         padding: 10,
+        flex: 1
     },
     contentContainer: {
         flexGrow: 1,

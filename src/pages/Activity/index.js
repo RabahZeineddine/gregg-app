@@ -14,6 +14,7 @@ import CouponsComponent from '../../components/CouponsComponent';
 import { connect } from 'react-redux'
 import { checkinInfo } from '../../actions/usersActions';
 import CustomActivityIndicator from '../../components/CustomActivityIndicator';
+import RewardsComponent from '../../components/RewardsComponent';
 
 
 
@@ -43,7 +44,8 @@ class Activity extends React.Component {
                 {checkinInfo && checkinInfo.score && (
                     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
                         <ActivityDetailsComponent store={checkinInfo} />
-                        <CouponsComponent />
+                        <CouponsComponent navigation={this.props.navigation} />
+                        <RewardsComponent items={checkinInfo.pointStore.items} score={checkinInfo.score} />
                         <ActivitiesComponent navigation={this.props.navigation} limit={8} />
                     </ScrollView>
                 )}
