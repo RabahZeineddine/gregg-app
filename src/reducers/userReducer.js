@@ -4,7 +4,6 @@ import {
     LOGIN_USER_FAILURE,
     LOGIN_USER_REQUEST,
     LOGIN_USER_SUCCESS,
-    LOGOUT_USER,
     VERIFY_REGISTERED_USER_FAILURE,
     VERIFY_REGISTERED_USER_REQUEST,
     VERIFY_REGISTERED_USER_SUCCESS,
@@ -16,7 +15,10 @@ import {
     CHECKIN_INFO_SUCCESS,
     REDEEMS_FAILURE,
     REDEEMS_REQUEST,
-    REDEEMS_SUCCESS
+    REDEEMS_SUCCESS,
+    LOGOUT_USER_FAILURE,
+    LOGOUT_USER_REQUEST,
+    LOGOUT_USER_SUCCESS
 } from '../actions/usersActions'
 
 
@@ -57,10 +59,6 @@ function user(state = initialUserState, action) {
                 fetchingError: true,
                 error: action.error,
                 lastUpdated: new Date()
-            }
-        case LOGOUT_USER:
-            return {
-                ...initialUserState
             }
 
         case VERIFY_REGISTERED_USER_REQUEST:
@@ -172,6 +170,17 @@ function user(state = initialUserState, action) {
                     isFetching: false,
                     items: action.redeems
                 }
+            }
+
+        case LOGOUT_USER_REQUEST:
+            return {
+                ...state,
+                loggingOut: true
+            }
+
+        case LOGOUT_USER_SUCCESS:
+            return {
+                ...initialUserState
             }
 
         default:

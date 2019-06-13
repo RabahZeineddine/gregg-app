@@ -4,7 +4,6 @@ import { AsyncStorage } from 'react-native'
 export const LOGIN_USER_REQUEST = 'LOGIN_USER_REQUEST'
 export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE'
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS'
-export const LOGOUT_USER = 'LOGOUT_USER'
 
 export const VERIFY_REGISTERED_USER_REQUEST = 'VERIFY_REGISTERED_USER_REQUEST'
 export const VERIFY_REGISTERED_USER_FAILURE = 'VERIFY_REGISTERED_USER_FAILURE'
@@ -47,11 +46,6 @@ const loginUserFailure = (error) => {
     }
 }
 
-export const logout = () => {
-    return {
-        type: LOGOUT_USER
-    }
-}
 
 export const login = (user) => dispatch => {
     dispatch(loginUserRequest())
@@ -182,4 +176,28 @@ export const getRedeems = () => dispatch => {
         .getRedeems()
         .then((redeems) => dispatch(redeemsSuccess(redeems)))
         .catch(err => dispatch(redeemsFailure(err)))
+}
+
+const logoutRequest = () => {
+    return {
+        type: LOGOUT_USER_REQUEST
+    }
+}
+
+const logoutFailure = (error) => {
+    return {
+        type: LOGOUT_USER_FAILURE,
+        error
+    }
+}
+
+const logoutSuccess = () => {
+    return {
+        type: LOGOUT_USER_SUCCESS
+    }
+}
+
+export const logout = () => dispatch => {
+    dispatch(logoutRequest())
+    dispatch(logoutSuccess())
 }
