@@ -50,7 +50,6 @@ export const signup = async (user) => {
 
 export const checkinInfo = async (storeId) => {
     let token = await getToken()
-    console.log(token)
     return fetch(`${env.API}/userapp/store/${storeId}`, {
         headers: {
             ...headers,
@@ -61,4 +60,18 @@ export const checkinInfo = async (storeId) => {
         .catch(err => {
             return Promise.reject(new ErrorHandler(err || 500).format())
         })
-} 
+}
+
+export const getRedeems = async () => {
+    let token = await getToken()
+    return fetch(`${env.API}/userapp/redeems`, {
+        headers: {
+            ...headers,
+            Authorization: token
+        },
+        method: 'GET'
+    }).then(Helper.checkFetchResponse)
+        .catch(err => {
+            return Promise.reject(new ErrorHandler(err || 500).format())
+        })
+}
