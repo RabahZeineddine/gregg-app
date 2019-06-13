@@ -18,6 +18,14 @@ export const CHECKIN_INFO_REQUEST = 'CHECKIN_INFO_REQUEST'
 export const CHECKIN_INFO_FAILURE = 'CHECKIN_INFO_FAILURE'
 export const CHECKIN_INFO_SUCCESS = 'CHECKIN_INFO_SUCCESS'
 
+export const REDEEMS_REQUEST = 'REDEEMS_REQUEST'
+export const REDEEMS_FAILURE = 'REDEEMS_FAILURE'
+export const REDEEMS_SUCCESS = 'REDEEMS_SUCCESS'
+
+export const LOGOUT_USER_REQUEST = 'LOGOUT_USER_REQUEST'
+export const LOGOUT_USER_FAILURE = 'LOGOUT_USER_FAILURE'
+export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS'
+
 
 const loginUserRequest = () => {
     return {
@@ -146,4 +154,32 @@ export const checkinInfo = (store) => dispatch => {
         .checkinInfo(store)
         .then((storeInfo) => dispatch(checkinInfoSuccess(storeInfo)))
         .catch(err => dispatch(checkinInfoFailure(err)))
+}
+
+const redeemsRequest = () => {
+    return {
+        type: REDEEMS_REQUEST
+    }
+}
+
+const redeemsFailure = (error) => {
+    return {
+        type: REDEEMS_FAILURE,
+        error
+    }
+}
+
+const redeemsSuccess = (redeems) => {
+    return {
+        type: REDEEMS_SUCCESS,
+        redeems
+    }
+}
+
+export const getRedeems = () => dispatch => {
+    dispatch(redeemsRequest())
+    return UserAPI
+        .getRedeems()
+        .then((redeems) => dispatch(redeemsSuccess(redeems)))
+        .catch(err => dispatch(redeemsFailure(err)))
 }
