@@ -13,7 +13,10 @@ import {
     SIGNUP_USER_SUCCESS,
     CHECKIN_INFO_FAILURE,
     CHECKIN_INFO_REQUEST,
-    CHECKIN_INFO_SUCCESS
+    CHECKIN_INFO_SUCCESS,
+    REDEEMS_FAILURE,
+    REDEEMS_REQUEST,
+    REDEEMS_SUCCESS
 } from '../actions/usersActions'
 
 
@@ -142,6 +145,35 @@ function user(state = initialUserState, action) {
                     ...action.store
                 }
             }
+
+        case REDEEMS_REQUEST:
+            return {
+                ...state,
+                redeems: {
+                    isFetching: true,
+                    fetchingError: false,
+                    error: null,
+                    items: []
+                }
+            }
+        case REDEEMS_FAILURE:
+            return {
+                ...state,
+                redeems: {
+                    isFetching: false,
+                    fetchingError: true,
+                    error: action.error
+                }
+            }
+        case REDEEMS_SUCCESS:
+            return {
+                ...state,
+                redeems: {
+                    isFetching: false,
+                    items: action.redeems
+                }
+            }
+
         default:
             return state
     }
