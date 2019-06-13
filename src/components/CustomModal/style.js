@@ -33,8 +33,8 @@ export default ({
     },
     subtitle: {
         color: colors.orange,
-        marginTop: 32,
-        fontSize: 24,
+        marginTop: 16,
+        fontSize: 28,
         textAlign: 'center',
         fontFamily: 'Overpass-SemiBold'
     },
@@ -47,6 +47,6 @@ export default ({
     },
     btnHolder: {
         alignItems: 'center',
-        marginTop: 32
+        marginTop: 16
     }
 })

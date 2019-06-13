@@ -12,6 +12,7 @@ import PropTypes from 'prop-types'
 import SuccessImage from '../../assets/Gregg-Sucesso.png'
 import ErrorImage from '../../assets/Gregg-Falha.png'
 import GreggAviso from '../../assets/Gregg-Aviso.png'
+import GreggApontando from '../../assets/Gregg-Apontando.png'
 
 import style from './style'
 import CustomButton from '../CustomButton';
@@ -51,6 +52,9 @@ class CustomModal extends React.Component {
                 switch (this.props.customImageName) {
                     case 'Gregg-Aviso':
                         icon = GreggAviso
+                        break;
+                    case 'Gregg-Apontando':
+                        icon = GreggApontando
                         break;
                     default:
                         icon = ErrorImage
@@ -92,7 +96,7 @@ class CustomModal extends React.Component {
 
 
                         <View style={styles.btnHolder}>
-                            {buttons.map((button, index) => <CustomButton key={index} backgroundColor={button.backgroundColor} text={button.text} onPress={button.onPress} />)}
+                            {buttons.map((button, index) => <CustomButton key={index} backgroundColor={button.backgroundColor} text={button.text} onPress={button.onPress} type={button.type} textColor={button.type && button.type == 'text' ? colors.orange : null} />)}
                         </View>
 
                     </View>
