@@ -67,7 +67,8 @@ class ActivityItem extends React.Component {
                 icon = ShopingCart
                 value = `- ${item.itemRedeem.price} Gregoletas`
                 valueStyle = 'red'
-                place = item.itemRedeem.name
+                productName = item.itemRedeem.name
+                place = item.itemRedeem.menuFrom.name 
                 date = item.dateOfRedeem
                 break
             default:

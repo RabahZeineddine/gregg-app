@@ -39,9 +39,6 @@ class Activities extends React.Component {
 
     render() {
         let { feeds, user } = this.props
-
-        console.log(user)
-
         return (
             <View style={styles.container}>
                 <View style={styles.holder}>

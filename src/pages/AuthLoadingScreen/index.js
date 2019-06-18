@@ -21,7 +21,6 @@ class AuthLoadingScreen extends React.Component {
 
         // GET LOGGED USER
         const USER = user
-
         this.props.navigation.navigate(USER.isLogged ? 'App' : 'Auth')
 
 

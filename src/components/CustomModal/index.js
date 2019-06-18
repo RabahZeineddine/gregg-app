@@ -13,6 +13,7 @@ import SuccessImage from '../../assets/Gregg-Sucesso.png'
 import ErrorImage from '../../assets/Gregg-Falha.png'
 import GreggAviso from '../../assets/Gregg-Aviso.png'
 import GreggApontando from '../../assets/Gregg-Apontando.png'
+import GreggChorando from '../../assets/Gregg-Chorando.png'
 
 import style from './style'
 import CustomButton from '../CustomButton';
@@ -55,6 +56,9 @@ class CustomModal extends React.Component {
                         break;
                     case 'Gregg-Apontando':
                         icon = GreggApontando
+                        break;
+                    case 'Gregg-Chorando':
+                        icon = GreggChorando
                         break;
                     default:
                         icon = ErrorImage

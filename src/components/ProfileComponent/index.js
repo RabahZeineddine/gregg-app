@@ -18,7 +18,6 @@ class ProfileComponent extends React.Component {
 
     render() {
         const { user } = this.props
-        // console.log(user)
         return (
             <View style={styles.holder}>
                 <View style={styles.profileHolder}>

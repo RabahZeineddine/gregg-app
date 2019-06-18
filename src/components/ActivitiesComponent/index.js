@@ -43,40 +43,49 @@ class ActivitiesComponent extends React.Component {
     )
 
     render() {
+        let { feeds, user } = this.props
 
-        let { feeds } = this.props
-        if (this.props.limit) {
-            feeds = Helper.cloneObject(feeds).splice(0, this.props.limit)
-        }
+        if (user.isLogged) {
 
-        return (
-            <View style={styles.holder}>
-                <View style={styles.header}>
-                    <Text style={styles.title}>ATIVIDADES RECENTES</Text>
-                    <TouchableOpacity onPress={this.toggleCollapse} style={styles.headerBtn}>
-                        <Text style={styles.headerBtnText}>{this.state.isCollapsed ? 'Ver todos' : 'Esconder'}</Text>
-                        <Ionicons name={this.state.isCollapsed ? 'ios-arrow-down' : 'ios-arrow-up'} size={30} color={colors.orange} />
-                    </TouchableOpacity>
+
+            if (this.props.limit) {
+                feeds = Helper.cloneObject(feeds).splice(0, this.props.limit)
+            }
+
+            return (
+                <View style={styles.holder}>
+                    <View style={styles.header}>
+                        <Text style={styles.title}>ATIVIDADES RECENTES</Text>
+                        <TouchableOpacity onPress={this.toggleCollapse} style={styles.headerBtn}>
+                            <Text style={styles.headerBtnText}>{this.state.isCollapsed ? 'Ver todos' : 'Esconder'}</Text>
+                            <Ionicons name={this.state.isCollapsed ? 'ios-arrow-down' : 'ios-arrow-up'} size={30} color={colors.orange} />
+                        </TouchableOpacity>
+                    </View>
+
+                    <Collapsible collapsed={this.state.isCollapsed} style={styles.container} >
+                        <FlatList
+                            style={styles.container}
+                            data={feeds}
+                            renderItem={this.renderITem}
+                            keyExtractor={this._keyExtractor}
+                            ListFooterComponent={this.ActivitiesFooter}
+                            ItemSeparatorComponent={() => (
+                                <View style={styles.separator} />
+                            )}
+                            contentContainerStyle={{ flexGrow: 1 }}
+                            showsHorizontalScrollIndicator={false}
+                            showsVerticalScrollIndicator={false}
+                        />
+                    </Collapsible>
                 </View>
 
-                <Collapsible collapsed={this.state.isCollapsed} style={styles.container} >
-                    <FlatList
-                        style={styles.container}
-                        data={feeds}
-                        renderItem={this.renderITem}
-                        keyExtractor={this._keyExtractor}
-                        ListFooterComponent={this.ActivitiesFooter}
-                        ItemSeparatorComponent={() => (
-                            <View style={styles.separator} />
-                        )}
-                        contentContainerStyle={{ flexGrow: 1 }}
-                        showsHorizontalScrollIndicator={false}
-                        showsVerticalScrollIndicator={false}
-                    />
-                </Collapsible>
-            </View>
+            )
 
-        )
+        } else {
+            return <View>
+                <Text>test</Text>
+            </View>
+        }
     }
 }
 

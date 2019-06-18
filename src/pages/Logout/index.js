@@ -6,11 +6,9 @@ import {
 } from 'react-native'
 
 import { connect } from 'react-redux'
-
-
 import style from './style'
-import CustomActivityIndicator from '../../components/CustomActivityIndicator';
-import { logout } from '../../actions/usersActions';
+import { logout } from '../../actions/usersActions'
+
 
 class Logout extends React.Component {
 
@@ -20,9 +18,6 @@ class Logout extends React.Component {
     }
 
     _bootstrapAsync = async () => {
-
-        // this.props.logout()
-        // this.props.navigation.navigate('Auth')
 
 
     }

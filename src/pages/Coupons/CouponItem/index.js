@@ -51,7 +51,7 @@ class CouponItem extends React.Component {
         const productName = item.itemRedeem.name
         const value = item.itemRedeem.price
 
-
+        const place = item.itemRedeem.menuFrom.name
         const disabledStyle = item.alreadyUsed
 
         return (
@@ -84,7 +84,7 @@ class CouponItem extends React.Component {
                 )}
                 <View style={styles.valueHolder}>
                     <Text style={[styles.title, disabledStyle ? styles.disabled : {}]}>{productName}</Text>
-                    {/* <Text style={[styles.subtitle, disabledStyle ? styles.disabled : {}]}>{place}</Text> */}
+                    <Text style={[styles.subtitle, disabledStyle ? styles.disabled : {}]}>{place}</Text>
                     <Text style={[styles.value, disabledStyle ? styles.disabled : {}]}>{`- ${value} pontos`}</Text>
                 </View>
                 <View style={styles.dateHolder}>

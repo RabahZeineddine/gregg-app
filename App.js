@@ -56,10 +56,10 @@ const HomeNavigator = createStackNavigator({
     screen: Activity,
     navigationOptions
   }
-},{
-  initialRouteName: 'Home',
-  unmountInactiveRoutes: true
-})
+}, {
+    initialRouteName: 'Home',
+    unmountInactiveRoutes: true
+  })
 
 const ActivitiesNavigator = createStackNavigator({
   Activities: {
@@ -194,7 +194,8 @@ const AppContainer = createAppContainer(createSwitchNavigator(
     Auth: AuthStack
   },
   {
-    initialRouteName: 'AuthLoading'
+    initialRouteName: 'AuthLoading',
+    resetOnBlur: false
   }
 ))
 
