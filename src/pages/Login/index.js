@@ -58,7 +58,7 @@ class Login extends React.Component {
                 .then(() => {
                     const { user } = this.props
                     if(user.isLogged){
-                        this.props.navigation.navigate('App')
+                        this.props.navigation.navigate('Home')
                     }
                 })
 

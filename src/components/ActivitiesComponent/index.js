@@ -56,34 +56,44 @@ class ActivitiesComponent extends React.Component {
                 <View style={styles.holder}>
                     <View style={styles.header}>
                         <Text style={styles.title}>ATIVIDADES RECENTES</Text>
-                        <TouchableOpacity onPress={this.toggleCollapse} style={styles.headerBtn}>
-                            <Text style={styles.headerBtnText}>{this.state.isCollapsed ? 'Ver todos' : 'Esconder'}</Text>
-                            <Ionicons name={this.state.isCollapsed ? 'ios-arrow-down' : 'ios-arrow-up'} size={30} color={colors.orange} />
-                        </TouchableOpacity>
+                        {feeds.length > 0 && (
+                            <TouchableOpacity onPress={this.toggleCollapse} style={styles.headerBtn}>
+                                <Text style={styles.headerBtnText}>{this.state.isCollapsed ? 'Ver todos' : 'Esconder'}</Text>
+                                <Ionicons name={this.state.isCollapsed ? 'ios-arrow-down' : 'ios-arrow-up'} size={30} color={colors.orange} />
+                            </TouchableOpacity>
+                        )}
                     </View>
 
-                    <Collapsible collapsed={this.state.isCollapsed} style={styles.container} >
-                        <FlatList
-                            style={styles.container}
-                            data={feeds}
-                            renderItem={this.renderITem}
-                            keyExtractor={this._keyExtractor}
-                            ListFooterComponent={this.ActivitiesFooter}
-                            ItemSeparatorComponent={() => (
-                                <View style={styles.separator} />
-                            )}
-                            contentContainerStyle={{ flexGrow: 1 }}
-                            showsHorizontalScrollIndicator={false}
-                            showsVerticalScrollIndicator={false}
-                        />
-                    </Collapsible>
+                    {feeds.length == 0 && (
+                        <View>
+                            <Text>Não há atividades recentes</Text>
+                        </View>
+                    )}
+
+                    {feeds.length > 0 && (
+                        <Collapsible collapsed={this.state.isCollapsed} style={styles.container} >
+                            <FlatList
+                                style={styles.container}
+                                data={feeds}
+                                renderItem={this.renderITem}
+                                keyExtractor={this._keyExtractor}
+                                ListFooterComponent={this.ActivitiesFooter}
+                                ItemSeparatorComponent={() => (
+                                    <View style={styles.separator} />
+                                )}
+                                contentContainerStyle={{ flexGrow: 1 }}
+                                showsHorizontalScrollIndicator={false}
+                                showsVerticalScrollIndicator={false}
+                            />
+                        </Collapsible>
+                    )}
                 </View>
 
             )
 
         } else {
             return <View>
-                <Text>test</Text>
+                <Text>Não há atividades recentes</Text>
             </View>
         }
     }

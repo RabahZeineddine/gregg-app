@@ -38,25 +38,33 @@ class Activities extends React.Component {
     }
 
     render() {
-        let { feeds, user } = this.props
+        let { feeds } = this.props
         return (
             <View style={styles.container}>
                 <View style={styles.holder}>
                     <View style={styles.header}>
                         <Text style={styles.title}>ATIVIDADES RECENTES</Text>
                     </View>
-                    <FlatList
-                        style={{ flex: 1 }}
-                        data={feeds}
-                        renderItem={this.renderITem}
-                        keyExtractor={this._keyExtractor}
-                        ItemSeparatorComponent={() => (
-                            <View style={styles.separator} />
-                        )}
-                        contentContainerStyle={{ flexGrow: 1 }}
-                        showsHorizontalScrollIndicator={false}
-                        showsVerticalScrollIndicator={false}
-                    />
+                    {feeds.length == 0 && (
+                        <View>
+                            <Text>Não há atividades recentes!</Text>
+                        </View>
+                    )}
+                    {feeds.length > 0 && (
+
+                        <FlatList
+                            style={{ flex: 1 }}
+                            data={feeds}
+                            renderItem={this.renderITem}
+                            keyExtractor={this._keyExtractor}
+                            ItemSeparatorComponent={() => (
+                                <View style={styles.separator} />
+                            )}
+                            contentContainerStyle={{ flexGrow: 1 }}
+                            showsHorizontalScrollIndicator={false}
+                            showsVerticalScrollIndicator={false}
+                        />
+                    )}
                 </View>
             </View>
         )

@@ -61,7 +61,12 @@ class Coupons extends React.Component {
                             <Ionicons name={this.state.isCollapsed ? 'ios-arrow-down' : 'ios-arrow-up'} size={30} color={colors.orange} />
                         </TouchableOpacity> */}
                     </View>
-                    {redeems && !redeems.isFetching && redeems.items && (
+                    {redeems && !redeems.isFetching && redeems.items && redeems.items.length == 0 && (
+                        <View>
+                            <Text>Não há cupons disponiveis!</Text>
+                        </View>
+                    )}
+                    {redeems && !redeems.isFetching && redeems.items && redeems.items.length > 0 && (
                         // <Collapsible collapsed={this.state.isCollapsed} style={{ flexGrow: 1 }} contentContainerStyle={{ flexGrow: 1 }} >
                         <FlatList
                             style={[styles.holder, { flexGrow: 1 }]}

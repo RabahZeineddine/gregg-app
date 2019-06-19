@@ -113,6 +113,7 @@ function user(state = initialUserState, action) {
                 fetchingError: false,
                 lastUpdated: new Date(),
                 isRegistered: action.user ? true : false,
+                isLogged: action.user ? true : false,
                 profile: { ...action.user }
             }
 
