@@ -32,13 +32,12 @@ import LogoutRoot from './src/pages/LogoutRoot';
 
 const navigationOptions = ({ navigation }) => ({
   headerMode: 'screen',
-  headerTitle: <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+  headerTitle: <TouchableOpacity style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} onPress={() => navigation.navigate('Home')}>
     <Text style={{
       color: colors.white,
       fontSize: 24,
       fontFamily: 'Overpass-Bold',
-      textAlign: 'center',
-      flex: 1
+      textAlign: 'center'
     }}>gregg</Text>
   </TouchableOpacity>,
   headerStyle: {
