@@ -1,6 +1,6 @@
 
 const config = {
-    API: 'https://20f7eee3.ngrok.io'
+    API: 'https://85f9913a.ngrok.io'
 }
 
 

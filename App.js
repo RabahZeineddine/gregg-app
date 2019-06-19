@@ -27,6 +27,7 @@ import TermsOfUse from './src/pages/TermsOfUse';
 import PrivacyPolicies from './src/pages/PrivacyPolicies';
 import Logout from './src/pages/Logout';
 import Activity from './src/pages/Activity';
+import LogoutRoot from './src/pages/LogoutRoot';
 
 
 const navigationOptions = ({ navigation }) => ({
@@ -97,7 +98,6 @@ const LogoutNavigator = createStackNavigator({
 })
 
 
-
 const AppStack = createDrawerNavigator({
   Home: {
     screen: HomeNavigator,
@@ -158,14 +158,12 @@ const AppStack = createDrawerNavigator({
         />
       )
     }
-  },
-},
-  {
+  }
+}, {
     initialRouteName: 'Home',
     unmountInactiveRoutes: true,
     contentComponent: props => <Menu {...props} />
-  }
-)
+  })
 
 const AuthStack = createStackNavigator(
   {
@@ -191,7 +189,8 @@ const AppContainer = createAppContainer(createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
     App: AppStack,
-    Auth: AuthStack
+    Auth: AuthStack,
+    LogoutRoot: LogoutRoot
   },
   {
     initialRouteName: 'AuthLoading',

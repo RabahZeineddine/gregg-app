@@ -30,10 +30,12 @@ function Menu(props) {
                         />
                     </View>
                     <View style={styles.dataHolder}>
-                        <Text style={styles.name}>{user.profile.name}</Text>
-                        <Text style={styles.cpf}>{Helper.formatCPF(user.profile.cpf)}</Text>
-                        {user.profile.xp && (<Text style={styles.xpLevel}>{user.profile.xp} XP</Text>)}
-                        {user.profile.level && (<Text style={styles.level}>Nível 2</Text>)}
+                        {user && user.profile && user.profile.name && (
+                            <Text style={styles.name}>{user.profile.name}</Text>
+                        )}
+                        {user && user.profile && user.profile.cpf && (
+                            <Text style={styles.cpf}>{Helper.formatCPF(user.profile.cpf)}</Text>
+                        )}
                     </View>
                 </View>
                 <ScrollView scrollsToTop={false} style={styles.container}>

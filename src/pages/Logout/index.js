@@ -1,44 +1,19 @@
 import React from 'react'
+import CustomActivityIndicator from '../../components/CustomActivityIndicator';
 
-import {
-    View, Text,
-    StyleSheet
-} from 'react-native'
-
-import { connect } from 'react-redux'
-import style from './style'
-import { logout } from '../../actions/usersActions'
 
 
 class Logout extends React.Component {
-
-    constructor(props) {
-        super(props)
-        this._bootstrapAsync();
+    componentDidMount() {
+        setTimeout(() => {
+            this.props.navigation.navigate('LogoutRoot')
+        }, 1000)
     }
-
-    _bootstrapAsync = async () => {
-
-
-    }
-
     render() {
         return (
-            <View>
-                <Text>Logout...</Text>
-            </View>
-            // <CustomActivityIndicator />
-
+            <CustomActivityIndicator />
         )
     }
 }
 
-const styles = StyleSheet.create(style)
-
-const mapDispatchToProps = dispatch => {
-    return {
-        logout: () => dispatch(logout())
-    }
-}
-
-export default connect(null, mapDispatchToProps)(Logout)
+export default Logout
